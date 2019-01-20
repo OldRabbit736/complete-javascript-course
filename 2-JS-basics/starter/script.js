@@ -1,4 +1,221 @@
 /****************************
+ * Coding challenge 4
+ */
+
+ var Mark = {
+     fullName: 'Mark Hunt',
+     mass: 80,
+     height: 1.85,
+     calcBMI: function(){
+         this.BMI = this.mass / (this.height * this.height);
+         return this.BMI;
+     }
+ }
+
+ var John = {
+    fullName: 'John Smith',
+    mass: 70,
+    height: 1.81,
+    calcBMI: function(){
+        this.BMI = this.mass / (this.height * this.height);
+        return this.BMI;
+    }
+}
+
+var bmiMark = Mark.calcBMI();
+var bmiJohn = John.calcBMI();
+
+if (bmiMark > bmiJohn){
+    console.log('Mark has a higher BMI than John');
+}
+else if (bmiMark < bmiJohn){
+    console.log('John has a higher BMI than Mark');
+}
+else{
+    console.log('Mark and John has the same BMI');
+}
+console.log('Mark: ' + bmiMark);
+console.log('John: ' + bmiJohn);
+
+
+/****************************
+ * Objects and methods
+ */
+/*
+var john = {
+  firstName: "John",
+  lastName: "Smith",
+  birthYear: 1990,
+  family: ["Jane", "Mark", "Emily"],
+  job: "teacher",
+  isMarried: false,
+  calcAge: function() {
+      this.age = 2019 - this.birthYear;
+  } // function expression assigned to a variable
+};
+
+john.calcAge(); // age property is added to the john object instance.
+console.log(john);
+*/
+
+
+/****************************
+ * Objects and properties
+ */
+/*
+ // object literal
+var john = {
+    firstName: 'John',
+    lastName: 'Smith',
+    birthYear: 1990,
+    family: ['Jane', 'Mark', 'Emily'],
+    job: 'teacher',
+    isMarried: false
+};
+
+console.log(john.firstName);
+console.log(john['birthYear']); // useful in run time
+var x = 'job';
+console.log(john[x]);
+
+john.job = 'designer';
+john['isMarried'] = true;
+console.log(john);
+
+// new Object syntax
+var jane = new Object();
+jane.firstName = 'Jane';
+jane.birthYear = 1992;
+jane['lastName'] = 'Smith';
+console.log(jane);
+*/
+
+/****************************
+ * Coding challenge 3
+ */
+/*
+var tipCalculator = function(bill) {
+  if (bill < 50) {
+    return bill * 0.2;
+  } else if (bill < 200) {
+    return bill * 0.15;
+  } else if (bill >= 200) {
+    return bill * 0.1;
+  }
+};
+
+var bill = [124, 48, 268];
+var tips = [tipCalculator(bill[0]),
+            tipCalculator(bill[1]),
+            tipCalculator(bill[2])];
+var total = [bill[0] + tips[0],
+             bill[1] + tips[1],
+             bill[2] + tips[2]];
+console.log(tips);
+console.log(total);
+*/
+
+/****************************
+ * Arrays
+ */
+/*
+ // initialize new array
+ var names = ['John', 'Mark', 'Jane'];
+ var years = new Array(1990, 1934, 2183);
+
+ console.log(names[0]);
+ console.log(names[1]);
+ console.log(names[2]);
+ console.log(names.length);
+
+ // mutate array data
+ names[1] = 'Ben';
+ console.log(names);
+
+ names[names.length] = 'Mary'
+ console.log(names);
+
+ // different data types
+ var john = ['john', 1990, 'smith', 1990, 'designer', false];
+john.push('blue');
+var number = john.unshift('Mr.');
+console.log(john, number);
+
+john.pop();
+john.pop();
+console.log(john);
+
+john.shift();
+console.log(john);
+
+console.log(john.indexOf(1990));
+
+var isDesigner = john.indexOf('designer') === -1 ? 'John is NOT a designer' : 'John Is a designer';
+console.log(isDesigner);
+*/
+
+/****************************
+ * Function statements and expressions
+ */
+/*
+// Function declaration => it is a statement.
+// function whatDoYouDo(job, firstName) {}
+
+// Function expression => it is an expression. var a = value;
+var whatDoYouDo = function(job, firstName) {
+  switch (job) {
+    case "teacher":
+      return firstName + ' teaches kids how to code.';
+    case "driver":
+      return firstName + ' drives a cab in Lisbon.';
+    case "designer":
+      return firstName + ' designs beautiful websites.';
+    default:
+      return firstName + ' does something else.';
+  }
+};
+
+console.log(whatDoYouDo('teacher', 'John'));
+console.log(whatDoYouDo('teacher', 'John'));
+console.log(whatDoYouDo('teacher', 'John'));
+
+// an expression results in a value.
+// a statement doesn't result in an immediate value.
+// like, if (true) {console.log(23)}, it's an action.
+*/
+
+/****************************
+ * Functions
+ */
+/*
+ // no return type, no parameter type because JS is dynamic type langauge
+ function calculateAge(birthYear) {
+     return 2019 - birthYear;
+ }
+
+var ageJohn = calculateAge(1990);
+var ageMike = calculateAge(1994);
+var ageJane = calculateAge(1989);
+console.log(ageJohn, ageMike, ageJane);
+
+function yearsUntilRetirement(birthYear, firstName) {
+    let age = calculateAge(birthYear);
+    let retirement = 65 - age;
+
+    if(retirement > 0){
+    console.log(firstName + ' ' + 'retires in '
+    + retirement + ' years.');
+    }
+    else{
+        console.log(firstName + ' is already retired.');
+    }
+}
+yearsUntilRetirement(1990, 'John');
+yearsUntilRetirement(1930, 'Mike');
+yearsUntilRetirement(1989, 'Jane');
+*/
+
+/****************************
  * Coding challenge 1
  */
 /*
