@@ -1,42 +1,162 @@
 /****************************
- * Coding challenge 4
+ * Coding challenge 5
  */
 
- var Mark = {
-     fullName: 'Mark Hunt',
-     mass: 80,
-     height: 1.85,
-     calcBMI: function(){
-         this.BMI = this.mass / (this.height * this.height);
-         return this.BMI;
-     }
- }
+var restaurantAdventureJohn = {
+  bills: [124, 48, 268, 180, 42],
+  tipCalculator: function () {
+    this.tips = [];
+    this.paid = [];
+    // don't do below
+    // this.tips = this.paid = [];
+    // when some value inserted into the tips array, than same happens to the paid array,
+    // because tips and paid are reference type. (they points to the same array)
 
- var John = {
-    fullName: 'John Smith',
-    mass: 70,
-    height: 1.81,
-    calcBMI: function(){
-        this.BMI = this.mass / (this.height * this.height);
-        return this.BMI;
+    for (var i = 0; i < this.bills.length; i++) {
+      var ratio;
+      if (this.bills[i] < 50) {
+        ratio = 0.2;
+      } else if (this.bills[i] < 200) {
+        ratio = 0.15;
+      } else {
+        ratio = 0.1;
+      }
+      this.tips[i] = this.bills[i] * ratio;
+      this.paid[i] = this.tips[i] + this.bills[i];
     }
+  }
+};
+
+restaurantAdventureJohn.tipCalculator();
+console.log(restaurantAdventureJohn.tips);
+console.log(restaurantAdventureJohn.paid);
+
+var restaurantAdventureMark = {
+  bills: [77, 5, 110, 45],
+  tipCalculator: function () {
+    this.tips = [];
+    this.paid = [];
+    for (var i = 0; i < this.bills.length; i++) {
+      var ratio;
+      if (this.bills[i] < 100) {
+        ratio = 0.2;
+      } else if (this.bills[i] < 300) {
+        ratio = 0.1;
+      } else {
+        ratio = 0.25;
+      }
+      this.tips[i] = this.bills[i] * ratio;
+      this.paid[i] = this.tips[i] + this.bills[i];
+    }
+  }
+};
+
+restaurantAdventureMark.tipCalculator();
+console.log(restaurantAdventureMark.tips);
+console.log(restaurantAdventureMark.paid);
+
+function calculateAverageArray(tips) {
+  var sum = 0;
+  for (var i = 0; i < tips.length; i++) {
+    sum += tips[i];
+  }
+  return sum / tips.length;
 }
+
+var someArray = [3, 5, 7];
+console.log(calculateAverageArray(someArray));
+
+restaurantAdventureJohn.average = calculateAverageArray(restaurantAdventureJohn.tips);
+restaurantAdventureMark.average = calculateAverageArray(restaurantAdventureMark.tips);
+
+var averageJohn = restaurantAdventureJohn.average;
+var averageMark = restaurantAdventureMark.average;
+
+if (averageJohn > averageMark) {
+  console.log("John's family paid more tips than Mark's");
+} else if (averageJohn === averageMark) {
+  console.log("John's family paid as much as Mark's");
+} else {
+  console.log("John's family paid less tips than Mark's");
+}
+console.log("John's family paid tips as much as " + averageJohn);
+console.log("Mark's family paid tips as much as " + averageMark);
+
+/****************************
+ * Loops and iteration
+ */
+/*
+for (var i = 0; i < 10; i++) {
+    console.log(i);
+}
+
+
+var john = ['John', 'Smith', 1990, 'designer', false];
+for(var i = 0; i < john.length; i++){
+    console.log(john[i]);
+}
+
+var i = 0;
+while (i < john.length) {
+    console.log(john[i]);
+    i++;
+}
+
+// continue and break statements
+var john = ["John", "Smith", 1990, "designer", false, "blue"];
+for (var i = 0; i < john.length; i++) {
+  if (typeof john[i] !== "string") continue;
+  console.log(john[i]);
+}
+
+for (var i = 0; i < john.length; i++) {
+  if (typeof john[i] !== "string") break;
+  console.log(john[i]);
+}
+
+// looping backwards
+for (var i = john.length - 1; i >= 0; i--) {
+  console.log(john[i]);
+}
+*/
+
+/****************************
+ * Coding challenge 4
+ */
+/*
+var Mark = {
+  fullName: "Mark Hunt",
+  mass: 80,
+  height: 1.85,
+  calcBMI: function() {
+    this.BMI = this.mass / (this.height * this.height);
+    return this.BMI;
+  }
+};
+
+var John = {
+  fullName: "John Smith",
+  mass: 70,
+  height: 1.81,
+  calcBMI: function() {
+    this.BMI = this.mass / (this.height * this.height);
+    return this.BMI;
+  }
+};
 
 var bmiMark = Mark.calcBMI();
 var bmiJohn = John.calcBMI();
 
-if (bmiMark > bmiJohn){
-    console.log('Mark has a higher BMI than John');
+if (bmiMark > bmiJohn) {
+  console.log("Mark has a higher BMI than John");
+} else if (bmiMark < bmiJohn) {
+  console.log("John has a higher BMI than Mark");
+} else {
+  console.log("Mark and John has the same BMI");
 }
-else if (bmiMark < bmiJohn){
-    console.log('John has a higher BMI than Mark');
-}
-else{
-    console.log('Mark and John has the same BMI');
-}
-console.log('Mark: ' + bmiMark);
-console.log('John: ' + bmiJohn);
-
+console.log("Mark: " + bmiMark);
+console.log("John: " + bmiJohn);
+*/
 
 /****************************
  * Objects and methods
@@ -57,7 +177,6 @@ var john = {
 john.calcAge(); // age property is added to the john object instance.
 console.log(john);
 */
-
 
 /****************************
  * Objects and properties
