@@ -272,6 +272,7 @@ switch (true) {
 */
 /*
 // falsy values: undefined, null, 0, '', NaN
+// and false (added by JS Park)
 // truthy values: NOT falsy values
 
 var height;
