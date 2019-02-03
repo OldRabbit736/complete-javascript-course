@@ -1,4 +1,39 @@
 ///////////////////////////////////////
+// Lecture: First Class Functions : Functions returning functions
+
+function interviewQuestion(job) {
+    if (job === 'designer') {
+        return function(name) {
+            console.log(name + ', can you please explain what UX design is?');
+        }        
+    } else if (job === 'teacher') {
+        return function(name) {
+            console.log('What subject do you teach, ' + name + '?');
+        }
+    } else {
+        return function(name) {
+            console.log('Hello ' + name + ', what do you do?');
+        }
+    }
+}
+
+var teacherQuestion = interviewQuestion('teacher');
+teacherQuestion('John');
+
+var designerQuestion = interviewQuestion('designer');
+designerQuestion('Jane');
+
+var normalQuestion = interviewQuestion();
+normalQuestion('Mark');
+
+interviewQuestion('teacher')('Leon');
+
+
+
+
+
+
+///////////////////////////////////////
 // Lecture: First Class Functions : Passing Functions as Arguments
 
 // A function is an instance of the Object type
@@ -7,6 +42,7 @@
 // We can pass a function as an argument to another function
 // We can return a function from a function
 
+/*
 var years = [1990, 1953, 1993, 2017, 2003];
 
 function arrayCalc(arr, fn){
@@ -41,6 +77,12 @@ console.log(fullAges);
 
 var hearRates = arrayCalc(ages, maxHeartRate);
 console.log(hearRates);
+
+// with these callback functions and generic arrayCalc function,
+// it is more readable, clean and maintainable than one big function
+
+*/
+
 
 
 ///////////////////////////////////////
