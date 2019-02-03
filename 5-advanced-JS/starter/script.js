@@ -1,5 +1,127 @@
-// Function constructor
+///////////////////////////////////////
+// Lecture: First Class Functions : Passing Functions as Arguments
 
+// A function is an instance of the Object type
+// A function behaves like any other object
+// We can store functions in a variable;
+// We can pass a function as an argument to another function
+// We can return a function from a function
+
+var years = [1990, 1953, 1993, 2017, 2003];
+
+function arrayCalc(arr, fn){
+    var arrRes = [];
+    for(var i = 0; i < arr.length; i++){
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+
+function calculateAge(el) {
+    return 2019 - el;
+}
+
+function isFullAge(el) {
+    return el >= 19;
+}
+
+function maxHeartRate(el) {
+    if(el >= 18 && el <= 81){
+        return Math.round(206.9 - (0.67 * el));
+    } else {
+        return -1;
+    }    
+}
+
+var ages = arrayCalc(years, calculateAge);
+console.log(ages);
+
+var fullAges = arrayCalc(ages, isFullAge);
+console.log(fullAges);
+
+var hearRates = arrayCalc(ages, maxHeartRate);
+console.log(hearRates);
+
+
+///////////////////////////////////////
+// Lecture: Primitives vs Objects
+/*
+// primitives
+var a = 23;
+var b = a;
+a = 34;
+console.log(a, b);
+var obj1 = {
+    name:'John',
+    age: 49
+}
+
+// objects
+var obj2 = obj1;
+obj1.age = 29;
+console.log(obj1, obj2);
+
+// functions
+var age = 84;
+var obj = {
+    name: 'Jonas',
+    city: 'Lisbon'
+};
+
+function change(a, b) {
+    a = 30;
+    b.city = 'San Francisco';
+}
+change(age, obj);
+console.log(age, obj);
+*/
+
+
+///////////////////////////////////////
+// Lecture: Object.create
+/*
+var personProto = {
+    calculateAge: function() {
+        console.log(2019 - this.yearOfBirth);
+    }
+};
+
+var john = Object.create(personProto);
+john.name = 'John';
+john.yearOfBirth = 1990;
+john.job = 'teacher';
+
+var jane = Object.create(personProto, {
+    name: {value: 'Jane'},
+    yearOfBirth: {value: 1969},
+    job: {value: 'designer'}
+});
+
+var simple = {
+    name: "one simple way",
+    dream: ['designer', 'professor'],
+    personMarried: {
+        name: 'jane',
+        age: 29
+    }
+}
+
+// function constructor => the object created always has the __prototype__ property
+// pointed to constructor's prototype object (function.prototype)
+// there is no freedom to not include function.prototype
+// and always constructor logic runs when the object is created
+
+// Object.create(prototype) => there is way not to include prototype object. just Object.create(null)!
+// there is no constructor logic! 
+// just pick the prototype object to be your __prototype__ property and pass it as the argument
+
+*/
+
+
+
+///////////////////////////////////////
+// Lecture: Prototype chain
+/*
 var john = {
     name: 'John',
     yearOfBirth: 1990,
@@ -39,7 +161,7 @@ console.log(john.lastName, jane.lastName, mark.lastName);
 
 // var x = [3, 4, 9];
 // console.info(x);
-
+*/
 
 
 
