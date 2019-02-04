@@ -444,7 +444,7 @@ c) correct answer (I would use a number for this)
     var questions = [q1, q2, q3];
     
     function score() {
-        var sc = 0;
+        var sc = 0;     // hide from rest of the code... it's like static variable in function declaration in C, C++ C#. comment added by JSP
         return function(correct) {
             if (correct) {
                 sc++;
