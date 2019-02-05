@@ -547,11 +547,11 @@ var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 
 console.log(animals.slice(2));
 console.log(animals.slice(2,4));
-
+console.log(animals.slice());
 
 // slice 메서드를 이용하여 Array와 유사한 객체/컬렉션을 새 Array로 변환 할 수 있다.
 function list() {
-    return Array.prototype.slice.call(arguments);   // thisArg = arguments
+    return Array.prototype.slice.call(arguments, 1);   // thisArg = arguments
 }
 
 var list1 = list(1, 2, 3);  // list1 is array. function 'list' is converter (from array-like object to Array)
