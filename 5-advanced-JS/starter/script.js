@@ -139,8 +139,9 @@ c) correct answer (I would use a number for this)
 ///////////////////////////////////////
 // Lecture: Bind, call and apply of a function
 
+
 /*
-var john = {
+n = {
     name: 'John',
     age: 29,
     job: 'teacher',
@@ -177,6 +178,11 @@ johnFriendly('night');
 
 var emilyFormal = john.presentation.bind(emily, 'formal');
 emilyFormal('afternoonr');
+
+// call and apply -> execute the function with thisArg
+// bind -> copy the function with thisArg, parameters given
+
+
 
 
 
