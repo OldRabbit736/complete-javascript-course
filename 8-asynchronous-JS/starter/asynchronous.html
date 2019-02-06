@@ -141,7 +141,15 @@
 
         ////////////////////////////////////////////////////////////
         // consuming Promises with Async/Await!!!
-
+        async function getRecipesAW(){
+            const IDs = await getIDs;
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[3]);
+            console.log(recipe);
+            const related = await getRelated('Jonas');
+            console.log(related);
+        }
+        getRecipesAW();
 
 
     </script>
