@@ -1,15 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Asynchronous JavaScript</title>
 </head>
+
 <body>
     <h1>Asynchronous JavaScript</h1>
     <script>
+
+
+      
+
+        // const second = () => {
+        //     setTimeout(() => {
+        //         console.log('async hey there!');
+        //     }, 2000);
+        // }
+        // const first = () => {
+        //     console.log('hey there!');
+        //     second();
+        //     console.log('end!');
+        // }
+        // first();
+
+        // callback hell -> needs promises!!
+        // promise : object that keeps track about whether a certain event has happened already or not
+        // and determines what happenes after the event has happened
+        // implements the concept of a future value that we're expecting
+        /*
+        function getRecipies() {
+            setTimeout(() => {  // asynchronous function ... simulates behavior of servers
+                const recipeId = [345, 234, 998, 400];
+                console.log(recipeId);
+
+                setTimeout((id) => {    // another asynchronous behavior
+                    const recipe = {
+                        name: 'fresh tomato pasta',
+                        publisher: 'Jonas'
+                    };
+                    console.log(`${id}: ${recipe.name}`);
+
+                    setTimeout((publisher)=>{
+                        const recipe = {
+                            name: 'Italian pizza',
+                            publisher: 'Jonas'
+                        };
+                        console.log(recipe);
+                    }, 1500, recipe.publisher);
+
+                }, 1500, recipeId[3])
+            }, 1500);
+        }
+        getRecipies();
+        */
+
+        // the Promise object represents the eventual completion (or failure) of an
+        // asynchronous operation, and its resulting value
+
+        // new Promise(executor);
+        // executor : a function that is passed with the arguments 'resolve' and 'reject'.
+        // the executor function is executed immediately by the Promise implementation,
+        // passing resolve and reject functions (the executor is called before the Promise
+        // constructor even returns the created object).
+        // the 'resolve' and 'reject' functions, when called, resolve or
+        // reject the promise, respectively. the executor normally initiates some
+        // asynchronous work, and then, once that completes, either calls
+        // the 'resolve' function to resolve the promise or else rejects it
+        // if an error occured. if an error is thrown in the executor function,
+        // the promise is rejected. the return value of the executor is ignored.
+
+        // a Promise is in one of these states:
+        // 1) pending: initial state, neither fulfilled nor rejected
+        // 2) fulfilled: meaning that the operation completed successfully
+        // 3) rejected: meaning that the operation failed
+        // a pending promise can either be fulfilled with a value, or rejected with a reason (error)
+        // when either of these options happens, the associated handlers queued up by a promise's
+        // 'then' method are called. (if the promise has already been fulfilled or rejected when
+        // a corresponding handler is attached, the handler will be called, so there is no race condition
+        // between anasynchronous operation completing and its handlers being attached)
+
+
         
+        const getIDs = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve([345, 234, 998, 400]);
+            }, 1500);
+        }); // executor is called before the promise constructor even returns the created object
+
+        const getRecipe = recID => {
+            return new Promise((resolve, reject) => {
+                setTimeout((id) => {
+                    const recipe = {
+                        title: 'fresh tomato pasta',
+                        publisher: 'Jonas'
+                    };
+                    resolve(`${id}: ${recipe.title} by ${recipe.publisher}.`);
+                }, 1500, recID);
+            });
+        };
+
+        const getRelated = publisher => {
+            return new Promise((resolve, reject) => {
+                setTimeout((pub) => {
+                    const recipe = {
+                        title: 'Italian pizza',
+                        publisher: 'Jonas'
+                    };
+                    resolve(`see also ${publisher}\'s ${recipe.title}`);
+                }, 1500, publisher);
+            });
+        };        
+
+        ////////////////////////////////////////////////////////////
+        // consuming Promises in traditional way!
+        // making a promise chain
+        
+        // getIDs
+        // .then(IDs => {      // .then() returns a Promise again!!
+        //     console.log(IDs);
+        //     return getRecipe(IDs[3]);   // executor function is executed immediately by the Promise implementation
+        // })
+        // .then(recipe => {
+        //     console.log(recipe);
+        //     return getRelated('Jonas');
+        // })
+        // .then(relatedString => {
+        //     console.log(relatedString);
+        // })
+        // .catch(error => {
+        //     console.log("error")
+        // });
+        // promise error handling can be done in 2 ways
+        // 1. callbackfk in second argument to then() method
+        // 2. callbackfk in catch() method ===> recommended
+
+
+        ////////////////////////////////////////////////////////////
+        // consuming Promises with Async/Await!!!
+
+
+
     </script>
 </body>
+
 </html>

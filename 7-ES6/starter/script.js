@@ -1,4 +1,364 @@
 /////////////////////////////////////////
+// CODING CHALLENGE 8
+
+/*
+
+Suppose that you're working in a small town administration, and you're in charge of two town elements:
+1. Parks
+2. Streets
+
+It's a very small town, so right now there are only 3 parks and 4 streets. All parks and streets have a name and a build year.
+
+At an end-of-year meeting, your boss wants a final report with the following:
+1. Tree density of each park in the town (forumla: number of trees/park area)
+2. Average age of each town's park (forumla: sum of all ages/number of parks)
+3. The name of the park that has more than 1000 trees
+4. Total and average length of the town's streets
+5. Size classification of all streets: tiny/small/normal/big/huge. If the size is unknown, the default is normal
+
+All the report data should be printed to the console.
+
+HINT: Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
+
+*/
+
+
+class Park {
+    constructor(name, buildYear, area, trees) {
+        this.name = name;
+        this.buildYear = buildYear;
+        this.area = area;
+        this.trees = trees;
+    }
+
+    getDensity() {
+        return this.trees / this.area;
+    }
+
+    getAge() {
+        return new Date().getFullYear() - this.buildYear;
+    }
+}
+
+class Street {
+    constructor(name, buildYear, length, size = 'normal') {
+        this.name = name;
+        this.buildYear = buildYear;
+        this.length = length;
+        this.size = size;
+    }
+
+    getAge() {
+        return new Date().getFullYear() - this.buildYear;
+    }
+}
+
+// instances of 3 parks
+const park1 = new Park('Ellis', 1999, 2600, 900);
+const park2 = new Park('Stone', 2002, 4900, 2000);
+const park3 = new Park('Deer', 2010, 6400, 3500);
+
+// instances of 4 streets
+const street1 = new Street('West', 1977, 80, 'small');
+const street2 = new Street('East', 1999, 100);
+const street3 = new Street('North', 1889, 120, 'big');
+const street4 = new Street('South', 2001, 200, 'huge');
+
+// arrays
+const parksArr = [park1, park2, park3];
+const streetsArr = [street1, street2, street3, street4];
+
+
+// reports!
+// tree densities of each park
+parksArr.forEach(park => console.log(`park ${park.name} has tree density of ${park.getDensity()} ea / m^2`));
+
+// average age of parks
+let sumAgePark = 0;
+for (let park of parksArr) {
+    sumAgePark += park.getAge();
+}   // instead, we can use parksArr.reduce()!
+let aveAgeParks = sumAgePark / parksArr.length;
+console.log(`the average age of parks in town is ${aveAgeParks}.`)
+
+// the name of the park that has more than 1000 trees
+const arrTreeParks = parksArr.filter(park => park.trees > 1000);
+if (arrTreeParks.length === 0) {
+    console.log('there is no park that has more than 1000 trees.');
+} else {
+    console.log(`the name of the park that has more than 1000 trees: `);
+    for (let arr of arrTreeParks) {
+        console.log(arr.name);
+    }
+}
+
+// total and average length of the town's streets
+let totalStreetLength = 0;
+streetsArr.forEach(street => totalStreetLength += street.length);
+let averageLength = totalStreetLength / streetsArr.length;
+console.log(`total length of the streets : ${totalStreetLength} m\r average length of the streets : ${averageLength} m`);
+
+// size classification of all streets
+streetsArr.forEach(street => console.log(`street ${street.name}\'s size : ${street.size}`));
+
+
+
+
+
+/////////////////////////////////////////
+// Lecture: Classes and subclasses
+
+/*
+
+// ES5
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+// Athlete5 inheriting Person5 properties
+var Athlete5 = function(name, yearOfBirth, job, olympicGames, medals) {
+    Person5.call(this, name, yearOfBirth, job);
+    this.olympicGames = olympicGames;
+    this.medals = medals;
+}
+
+// Athlete5.prototype.wonMedal = function() {
+//     this.medals++;
+//     console.log(this.medals);    
+// }
+
+// Athlete5 inheriting Person5 prototype
+Athlete5.prototype = Object.create(Person5.prototype);
+
+// warning!!!
+// Object.create method make the prototype property of Athlete5 points to the Person5.prototpye
+// so, formerly added prototype properties will be lost if have any.
+// ex) if the wonMedal method below were created before Object.create,
+// the method will be lost as of here
+
+Athlete5.prototype.wonMedal = function() {
+    this.medals++;
+    console.log(this.medals);    
+}
+
+// var john55 = new Athlete5('a', 1999, '3', 22, 111);
+
+// var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 12);
+// var john = new Person5('John', 1990, 'teacher');
+
+// var random = Object.create(Person5.prototype);
+// var random2 = Object.create(Person5);
+
+var johnAthlete5 = new Athlete5('John', 1990, 'swimmer', 3, 12);
+
+johnAthlete5.calculateAge();
+johnAthlete5.wonMedal();
+
+
+
+
+// ES6
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+    // no comma, no semicolon here
+    calculateAge() {
+        const age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }   // => placed in prototype object  
+}
+
+class Athlete6 extends Person6 {
+    constructor(name, yearOfBirth, job, olympicGames, medals) {
+        super(name, yearOfBirth, job);
+        this.olympicGames = olympicGames;
+        this.medals = medals;
+    }
+
+    wonMedal() {
+        this.medals++;
+        console.log(this.medals);
+    }   // => placed in the prototype object (Person6.prototype)
+}
+
+const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 12);
+johnAthlete6.wonMedal();
+johnAthlete6.calculateAge();
+
+*/
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// Lecture: Classes
+
+/*
+// ES5
+var Person5 = function(name, yearOfBirth, job) {
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+}
+
+Person5.prototype.calculateAge = function() {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+var john5 = new Person5('John', 1990, 'teacher');
+john5.calculateAge();
+
+// ES6 : class is just syntatic sugar and exactly same as above
+class Person6 {
+    constructor(name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+    // no comma, no semicolon here
+    calculateAge() {
+        const age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }   // => placed in prototype object
+
+    static greeting() {
+        console.log('hi there!');
+    }   // => placed not in prototype object. then... where? 
+}
+
+var john6 = new Person6('John', 1990, 'teacher');
+john6.calculateAge();
+
+Person6.greeting();
+// Person6 is acutally function constructor behind scene,
+// and all function in javascript is object too.
+// so, static function is actually a method attached to the object (function constructor)
+// static functions are not inherited to instances (not in the __prototype__)
+
+// Few things to keep in mind!
+// 1. class definitions are not hoisted
+// so only after class definition has made,
+// we can use the class
+// 2. we can only add methods to classes but not properties
+// that's not a problem at all,
+// because inheriting properties through the object instance is not the best practice
+// (when method properties are inherited, all instances have the same method and it's waste of memory)
+
+*/
+
+
+
+
+
+
+/////////////////////////////////////////
+// Lecture: Map
+
+// Map is added to JS as of ES6
+// key and value can be any type; key can be String, number, object, etc....
+// in Object, there is no key.. there are properties
+
+/*
+const question = new Map();
+question.set('question', 'What is the official name of the latest major version of Javascript?');
+question.set(1, 'ES5');
+question.set(2, 'ES6');
+question.set(3, 'ES2015');
+question.set(4, 'ES7');
+question.set('correct', 3);
+question.set(true, 'correct answer!');
+question.set(false, 'try again..');
+
+// type in question in the console to see what the map looks like
+
+console.log(question.get('question'));
+console.log(question.get('1')); // undefined
+console.log(question.get(1));
+console.log(question.size);
+
+console.log(question.size);
+
+if (question.has(4)){
+    console.log("it has key 4 in it");
+}
+
+// question.forEach((key, value) => {
+//     console.log(`key: [${key}] has value: [${value}].`);
+// });
+
+
+for (let [key, value] of question.entries()) {  // destructuring here
+    //console.log(`key: [${key}] has value: [${value}].`);
+    if (typeof(key) === 'number') {
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+const ans = parseInt(prompt('please enter your answer'));
+console.log(question.get(ans === question.get('correct')));
+
+*/
+
+
+
+
+
+/////////////////////////////////////////
+// Lecture: Default parameters
+
+
+/*
+// ES5
+function SmithPerson(firstName, yearOfBirth, lastName, nationality) {
+    lastName === undefined ? lastName = 'Smith' : lastName = lastName;
+    nationality === undefined ? nationality = 'american' : nationality = nationality;
+    // lastName and nationality above are parameters! not property!
+
+
+    this.firstName = firstName;
+    this.yearOfBirth = yearOfBirth;
+    this.lastName = lastName;
+    this.nationality = nationality;
+}
+*/
+
+/*
+// ES6
+function SmithPerson(firstName, yearOfBirth, lastName = 'Smith', nationality = 'american') {
+    this.firstName = firstName;
+    this.yearOfBirth = yearOfBirth;
+    this.lastName = lastName;
+    this.nationality = nationality;
+}
+// the signature of SmithPerson -> there are question marsk with the defualt parameters
+var john = new SmithPerson('John', 1990);
+var emily = new SmithPerson('Emily', 1986, 'Diaz', 'spanish');
+
+*/
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
 // Lecture: Rest parameters
 
 
@@ -39,7 +399,7 @@ isFullAge6(1990, 1999, 1994, 2011);
 */
 
 
-
+/*
 
 
 // ES5
@@ -65,7 +425,7 @@ function isFullAge6(limit, ...years) {  // rest of the parameter is collected in
 isFullAge6(16, 1990, 1999, 1994, 2011);
 
 
-
+*/
 
 
 
