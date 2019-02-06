@@ -5,19 +5,64 @@
 /*
 // ES5
 function isFullAge5() {
-    //console.log(arguments);   // this arguments object is not a Array, it's an object.
+    //console.log(arguments);   // this arguments object is not a Array, it's an array-like object.
     var argsArr = Array.prototype.slice.call(arguments);
 
     argsArr.forEach(function(cur) {
-        console.log(2019 - curr >= 18);
+        console.log(2019 - cur >= 18);
     });
 }
 
-isFullAge5(1990, 1999, 1994);
+//isFullAge5(1990, 1999, 1994, 2011);
+
+// Array 아닌 인수들을 넣고,
+// Array의 함수인 slice를 이용하여 인수들을 array로 만들고
+// array 함수인 forEach를 이용하는 과정을 거침
+
+
+
+// ES6
+function isFullAge6(...years) { // make an array instance named 'years'   this is the rest parameter
+    //console.log(years);
+    years.forEach(cur => console.log((2019 - cur) >= 18));
+}
+
+isFullAge6(1990, 1999, 1994, 2011);
+
+
+// difference between 'rest operator' and 'spread operator'
+// spread operator : used in the function call, argument is an array, and argument is spread into function call
+// so, nothing to do with the function declaration.
+// rest operator : used in the function declaration, affecting the way of using function.
 
 
 */
 
+
+
+
+
+// ES5
+function isFullAge5(limit) {
+    //console.log(arguments);
+    var argsArr = Array.prototype.slice.call(arguments, 1);
+    console.log(argsArr);
+
+    argsArr.forEach(function(cur) {
+        console.log(2019 - cur >= limit);
+    });
+}
+
+isFullAge5(16, 1990, 1999, 1994, 2011);
+
+// ES6
+function isFullAge6(limit, ...years) {  // rest of the parameter is collected into an array named years!
+                                        // no matter how many parameters left
+    
+    years.forEach(cur => console.log((2019 - cur) >= limit));
+}
+
+isFullAge6(16, 1990, 1999, 1994, 2011);
 
 
 
@@ -535,7 +580,7 @@ console.log(k);
 
 
 
-
+/*
 
 
 // before start : Array.Prototype.slice()
@@ -547,6 +592,15 @@ var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 
 console.log(animals.slice(2));
 console.log(animals.slice(2,4));
+// Array의 prototype 함수 중 slice를 이용
+// slice는 내부적으로 this를 사용하는데, 당연하게도 이 this는
+// slice를 사용하는 array instance다.
+// 이 this를 call 함수를 이용하여 다른 this를 받아들이도록 하면
+// array instance가 아닌 array-like object도 this로 받아들이도록 할 수 있다.
+// search "array-like object" on google
+// 즉 array-like object가 array 오브젝트만이 쓸 수 있는 slice 메서드의
+// 헤택을 보게 되는 것이다. 일종의 hack 이라고 할 수 있다.
+// 공식적으로는 Array.from()을 쓰는것이 낫다.
 
 
 // slice 메서드를 이용하여 Array와 유사한 객체/컬렉션을 새 Array로 변환 할 수 있다.
@@ -558,3 +612,4 @@ var list1 = list(1, 2, 3);  // list1 is array. function 'list' is converter (fro
 console.log(list1);
 
 
+*/
