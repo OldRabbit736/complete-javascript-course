@@ -12,6 +12,31 @@
     <h1>Asynchronous JavaScript</h1>
     <script>
 
+        ////////////////////////////////////////////////////////////
+        // making AJAX calls with Fetch and Promises
+        
+        // blocked by CORS policy
+        // fetch('https://cors-anywhere.herokuapp.com//https://www.metaweather.com/api/location/search/?lattlong=50.068,-5.316')
+        // .then(result => {
+        //     console.log(result);
+        //     return result.json();
+        // })
+        // .then(jsonString => {
+        //     console.log(jsonString);
+        // })
+        // .catch(error => console.log(error));
+
+        fetch('https://cors-anywhere.herokuapp.com//https://www.metaweather.com/api/location/search/?lattlong=50.068,-5.316')
+        .then(response => {
+            return response.json();
+        })
+        .then(myJson => {
+            console.log(JSON.stringify(myJson));
+        });
+
+
+
+
 
       
 
@@ -83,7 +108,7 @@
         // a corresponding handler is attached, the handler will be called, so there is no race condition
         // between anasynchronous operation completing and its handlers being attached)
 
-
+        /*
         
         const getIDs = new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -140,7 +165,7 @@
 
 
         ////////////////////////////////////////////////////////////
-        // consuming Promises with Async/Await!!!
+        // consuming Promises with Async/Await!!
         async function getRecipesAW(){
             const IDs = await getIDs;
             console.log(IDs);
@@ -148,9 +173,17 @@
             console.log(recipe);
             const related = await getRelated('Jonas');
             console.log(related);
-        }
-        getRecipesAW();
 
+            return related; // an async function always returns a promise
+                            // and by returning, the promise is settled as resolved
+        }
+        // not working (pending)
+        // const recipe = getRecipesAW();
+        // console.log(recipe);
+
+        // 
+        getRecipesAW().then(result => console.log(result));
+        */
 
     </script>
 </body>
