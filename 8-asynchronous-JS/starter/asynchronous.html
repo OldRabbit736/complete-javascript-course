@@ -14,7 +14,71 @@
 
         ////////////////////////////////////////////////////////////
         // making AJAX calls with Fetch and Promises
-        
+        const crossUrl1 = 'https://crossorigin.me/';
+        const crossUrl2 = 'https://cors-anywhere.herokuapp.com/';
+        const metaweatherUrl1 = 'https://www.metaweather.com/api/location/search/?query=san';
+        const metaweatherUrl2 = 'https://www.metaweather.com/api/location/2487956';
+        // fetch() returns a Promise<Response> object
+        // so, it completes with a Response object... actually Response is an interface
+        // what is a Response interface?
+        // https://developer.mozilla.org/en-US/docs/Web/API/Response
+        // Response implements Body, and among the methods Body has,..
+        // Body.json() : Takes a Response stream and reads it to completion.
+        // It returns a promise that resolves with the result of parsing the body text as JSON.
+        // fetch(crossUrl2 + metaweatherUrl1)
+        // .then(result => {
+        //     console.log(result);
+        //     return result.json();
+        // })
+        // .then(json => { // result json is actually an array
+        //     //console.log(JSON.stringify(json));
+        //     console.log(json);
+        //     console.log(JSON.stringify(json));
+        // });
+        function getWeather(woeid) {    // woeid : where on earth id
+            const crossUrl = 'https://cors-anywhere.herokuapp.com/';
+            const metaweatherUrl = 'https://www.metaweather.com/api/location/';
+            fetch(crossUrl + metaweatherUrl + woeid)    // it retruns a Promise<Response>, Response is an object with header property and actual response contents
+                .then(response => {
+                    console.log(response);
+                    return response.json();   // takes a Response stream and reads it to completion
+                    // It returns a promise that resolves with the result of parsing the body text as JSON
+                })
+                .then(json => { // JSON object returned
+                    console.log(json);
+                    const today = json.consolidated_weather[0];
+                    console.log(`Temperatures in ${json.title} stay between ${today.min_temp} and ${today.max_temp}`);
+                })
+                .catch(error => console.log(error));
+        }
+
+        //getWeather(2487956);
+        //getWeather(44418324324);    // NOT FOUND (404)
+
+
+        // async/await version
+        async function getWeatherAW(woeid) {
+            try {                
+                const crossUrl = 'https://cors-anywhere.herokuapp.com/';
+                const metaweatherUrl = 'https://www.metaweather.com/api/location/';
+                const result = await fetch(crossUrl + metaweatherUrl + woeid);
+                const json = await result.json();
+                console.log(json);
+                const today = json.consolidated_weather[0];
+                console.log(`Temperatures in ${json.title} stay between ${today.min_temp} and ${today.max_temp}`);
+                return json;
+            } catch(error) {
+                alert(error);
+            }
+        }
+
+        let dataSanFrancisco;
+        // an async function returns a Promise<return type>
+        getWeatherAW(2487956).then(json => dataSanFrancisco = json).then(() => console.log(dataSanFrancisco));  // log file is fine but below...
+        console.log(dataSanFrancisco);  // undefined
+        //getWeatherAW(44418324324);    // NOT FOUND (404)
+
+
         // blocked by CORS policy
         // fetch('https://cors-anywhere.herokuapp.com//https://www.metaweather.com/api/location/search/?lattlong=50.068,-5.316')
         // .then(result => {
@@ -26,19 +90,25 @@
         // })
         // .catch(error => console.log(error));
 
-        fetch('https://cors-anywhere.herokuapp.com//https://www.metaweather.com/api/location/search/?lattlong=50.068,-5.316')
-        .then(response => {
-            return response.json();
-        })
-        .then(myJson => {
-            console.log(JSON.stringify(myJson));
-        });
+        // fetch('https://cors-anywhere.herokuapp.com//https://www.metaweather.com/api/location/search/?lattlong=50.068,-5.316')
+        // .then(response => {
+        //     return response.json();
+        // })
+        // .then(myJson => {
+        //     console.log(JSON.stringify(myJson));
+        // });
+
+        // fetch('https://cors-anywhere.herokuapp.com/https://himate.hyundai-ce.com/Page/Asmx/AppService.asmx?op=PG_RDMB0200_MACHINE_INFO?MACHINE_NO=HHKHW600EF0000048&USER_ID=A480851')
+        // .then(response => {
+        //     console.log(response);
+        //     return response.json();
+        // })
+        // .then(jsonString => {
+        //     console.log(jsonString);
+        // });
 
 
 
-
-
-      
 
         // const second = () => {
         //     setTimeout(() => {
@@ -109,7 +179,7 @@
         // between anasynchronous operation completing and its handlers being attached)
 
         /*
-        
+
         const getIDs = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve([345, 234, 998, 400]);
@@ -138,12 +208,12 @@
                     resolve(`see also ${publisher}\'s ${recipe.title}`);
                 }, 1500, publisher);
             });
-        };        
+        };
 
         ////////////////////////////////////////////////////////////
         // consuming Promises in traditional way!
         // making a promise chain
-        
+
         // getIDs
         // .then(IDs => {      // .then() returns a Promise again!!
         //     console.log(IDs);
@@ -181,7 +251,7 @@
         // const recipe = getRecipesAW();
         // console.log(recipe);
 
-        // 
+        //
         getRecipesAW().then(result => console.log(result));
         */
 
