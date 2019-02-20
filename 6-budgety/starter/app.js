@@ -184,7 +184,7 @@ var UIController = (function () {
                 element = DOMstrings.expensesContainer;
 
                 html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
-            };
+            }
 
             // Replace theh placeholder text with some actual data
             newHtml = html.replace('%id%', obj.id);
