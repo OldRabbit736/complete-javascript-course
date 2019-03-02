@@ -14,7 +14,6 @@ const state = {};
 /**
  * SEARCH CONTROLLER
  */
-
 const controlSearch = async () => {
     // 1) Get query from view
     const query = searchView.getInput();   // TODO
@@ -28,12 +27,18 @@ const controlSearch = async () => {
         searchView.clearInput();
         renderLoader(elements.searchRes);
 
-        // 4) Search for recipes
-        await state.search.getResult();
-
-        // 5) render results on UI
-        clearLoader();
-        searchView.renderResults(state.search.result);
+        try {
+            // 4) Search for recipes
+            await state.search.getResult();
+    
+            // 5) render results on UI
+            clearLoader();
+            searchView.renderResults(state.search.result);
+        } catch (error) {
+            console.log(error);
+            alert('error: controlSearch()');
+            clearLoader();
+        }
     }
 };
 
