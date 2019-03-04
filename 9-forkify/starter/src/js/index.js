@@ -1,6 +1,7 @@
 import Search from './models/Search';   // importing the default export
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView'
+import * as recipeView from './views/recipeView'
 import { elements, renderLoader, clearLoader } from './views/base'; // importing the named exports
 
 /** Global state of the app
@@ -67,6 +68,8 @@ const controlRecipe = async () => {
 
     if (id) {
         // prepare UI for changes
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
 
         // create new recipe object
         state.recipe = new Recipe(id);
@@ -81,7 +84,9 @@ const controlRecipe = async () => {
             state.recipe.calcServings();
     
             // render recipe
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
+
         } catch (error) {
             console.log(error);
             alert("error: controlRecipe()");
