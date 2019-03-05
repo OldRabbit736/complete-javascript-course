@@ -31,7 +31,7 @@ const controlSearch = async () => {
         try {
             // 4) Search for recipes
             await state.search.getResult();
-    
+
             // 5) render results on UI
             clearLoader();
             searchView.renderResults(state.search.result);
@@ -71,6 +71,9 @@ const controlRecipe = async () => {
         recipeView.clearRecipe();
         renderLoader(elements.recipe);
 
+        // highlight selected search
+        if (state.search) searchView.highlightSelected(id);
+
         // create new recipe object
         state.recipe = new Recipe(id);
 
@@ -78,11 +81,11 @@ const controlRecipe = async () => {
             // get recipe data and parse ingredients
             await state.recipe.getRecipe();
             state.recipe.parseIngredients();
-    
+
             // calculate servings and time
             state.recipe.calcTime();
             state.recipe.calcServings();
-    
+
             // render recipe
             clearLoader();
             recipeView.renderRecipe(state.recipe);
